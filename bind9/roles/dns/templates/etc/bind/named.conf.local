@@ -1,0 +1,7 @@
+{% for zone in zones.keys() %}
+zone "{{ zone }}" {
+    type master;
+    file "/etc/bind/zones/{{ zone }}";
+};
+
+{% endfor %}

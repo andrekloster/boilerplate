@@ -1,0 +1,8 @@
+[dns]
+10.192.1.1
+
+[all:children]
+dns
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

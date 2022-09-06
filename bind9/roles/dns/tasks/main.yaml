@@ -1,0 +1,46 @@
+---
+- include_vars: vars/main.yaml
+- name: Install bind9
+  apt:
+    pkg:
+      - bind9
+    update_cache: true
+- name: copy named.conf.local
+  template:
+    src: templates/etc/bind/named.conf.local
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: bind
+    mode: '0644'
+- name: copy named.conf.options
+  template:
+    src: templates/etc/bind/named.conf.options
+    dest: /etc/bind/named.conf.options
+    owner: root
+    group: bind
+    mode: '0644'
+- name: create zones directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/bind/zones
+    owner: root
+    group: bind
+    mode: '0750'
+- name: create bind logs directory
+  ansible.builtin.file:
+    state: directory
+    path: /var/log/named
+    owner: bind
+    group: bind
+    mode: '0750'
+- name: modify forward zone
+  template:
+    src: templates/etc/bind/zones/{{ item }}
+    dest: /etc/bind/zones/{{ item }}
+    owner: root
+    group: bind
+    mode: 0640
+  loop:
+    - 'test.local'
+    - '1.192.10.in-addr.arpa'
+  notify: restart bind

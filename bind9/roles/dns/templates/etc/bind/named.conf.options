@@ -1,0 +1,47 @@
+options {
+
+  directory "/var/cache/bind";
+  
+  forwarders {
+    1.1.1.1;
+  };
+  
+  listen-on port 53 {
+    127.0.0.1;
+    10.192.1.1;
+  };
+
+  allow-query {
+    127.0.0.1;
+    ::1;
+    10.0.0.0/8;
+  };
+  
+  #allow-transfer {
+  #  10.172.1.1;
+  #};
+
+  #also-notify {
+  #  10.172.1.1;
+  #};
+  
+  allow-update-forwarding { none; };
+  auth-nxdomain no;
+  dnssec-validation auto;
+};
+
+logging {
+
+  channel simple_log {
+    file "/var/log/named/bind.log" versions 3 size 3m;
+	severity notice;
+	print-time yes;
+	print-severity yes;
+	print-category yes;
+  };
+
+  category default {
+    simple_log;
+	default_syslog;
+  };
+};

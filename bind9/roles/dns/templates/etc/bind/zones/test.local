@@ -1,0 +1,20 @@
+$TTL 10m
+@ IN SOA dns.test.local. info.dns.test.local. (
+{% for serial in zones['test.local']['serial'] %}
+    {{ serial }} ; serial
+{% endfor %}
+    3h ; refresh
+    10m ; retry
+    7d ; expire
+    10m ; TTL
+)
+
+@ IN NS dns.test.local.
+
+{% for hostname, ip in zones['test.local']['records']['a'].items() %}
+{{ hostname }}  IN  A    {{ ip[0] }}
+{% endfor %}
+
+{% for cname, destination in zones['test.local']['records']['cname'].items() %}
+{{ cname }}  IN  CNAME    {{ destination[0] }}
+{% endfor %}
