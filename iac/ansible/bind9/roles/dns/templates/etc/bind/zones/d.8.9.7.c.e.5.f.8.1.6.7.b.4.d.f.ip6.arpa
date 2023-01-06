@@ -1,6 +1,6 @@
 $TTL 60
 @ IN SOA dns.test.local. info.dns.test.local. (
-{% for serial in zones['1.192.10.in-addr.arpa']['serial'] %}
+{% for serial in zones['8.9.d.b.9.b.6.5.8.c.4.e.0.7.d.f.ip6.arpa']['serial'] %}
     {{ serial }} ; serial
 {% endfor %}
     3h ; refresh
@@ -11,6 +11,6 @@ $TTL 60
 
 @    IN NS  dns.test.local.
 
-{% for hostname, ip_suffix in zones['1.192.10.in-addr.arpa']['records']['a'].items() %}
+{% for hostname, ip_suffix in zones['d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa']['records'].items() %}
 {{ ip_suffix[0] }}  IN  PTR  {{ hostname }}.test.local.
 {% endfor %}

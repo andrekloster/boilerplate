@@ -1,0 +1,23 @@
+---
+zones:
+  test.local:
+    serial: ["2022090201"]
+    records:
+      a:
+        dns: ["10.192.1.1"]
+        ansible: ["10.192.1.2"]
+      aaaa:
+        dns: ["fd4b:7618:f5ec:798d::1"]
+        ansible: ["fd4b:7618:f5ec:798d::2"]
+      cname:
+        test-cname: ["dns"]
+  1.42.10.in-addr.arpa:
+    serial: ["2022090201"]
+    records:
+      dns: ["1"]
+      ansible: ["2"]
+  d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa:
+    serial: ["2022090201"]
+    records:
+      dns: ["1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0"]
+      ansible: ["2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0"]

@@ -11,8 +11,12 @@ $TTL 10m
 
 @ IN NS dns.test.local.
 
-{% for hostname, ip in zones['test.local']['records']['a'].items() %}
-{{ hostname }}  IN  A    {{ ip[0] }}
+{% for hostname, ip4 in zones['test.local']['records']['a'].items() %}
+{{ hostname }}  IN  A    {{ ip4[0] }}
+{% endfor %}
+
+{% for hostname, ip6 in zones['test.local']['records']['aaaa'].items() %}
+{{ hostname }}  IN  AAAA    {{ ip6[0] }}
 {% endfor %}
 
 {% for cname, destination in zones['test.local']['records']['cname'].items() %}

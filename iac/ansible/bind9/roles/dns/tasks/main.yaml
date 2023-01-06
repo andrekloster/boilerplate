@@ -43,4 +43,5 @@
   loop:
     - 'test.local'
     - '1.192.10.in-addr.arpa'
+    - 'd.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa'
   notify: restart bind

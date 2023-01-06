@@ -1,0 +1,16 @@
+$TTL 60
+@ IN SOA dns.test.local. info.dns.test.local. (
+{% for serial in zones['1.192.10.in-addr.arpa']['serial'] %}
+    {{ serial }} ; serial
+{% endfor %}
+    3h ; refresh
+    10m ; retry
+    7d ; expire
+    10m ; TTL
+)
+
+@    IN NS  dns.test.local.
+
+{% for hostname, ip_suffix in zones['1.192.10.in-addr.arpa']['records'].items() %}
+{{ ip_suffix[0] }}  IN  PTR  {{ hostname }}.test.local.
+{% endfor %}
