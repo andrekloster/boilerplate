@@ -1,0 +1,30 @@
+# Template used to create this container: /usr/share/lxc/templates/lxc-download
+# Parameters passed to the template:
+# For additional config options, please look at lxc.container.conf(5)
+
+# Uncomment the following line to support nesting containers:
+#lxc.include = /usr/share/lxc/config/nesting.conf
+# (Be aware this has security implications)
+
+# Distribution configuration
+lxc.include = /usr/share/lxc/config/common.conf
+lxc.include = /usr/share/lxc/config/userns.conf
+lxc.arch = amd64
+
+# Container specific configuration
+lxc.idmap = u 0 100000 65536 # WICHTIG FÜR UNPRIVILIGIERTE CONTAINER
+lxc.idmap = g 0 100000 65536 # WICHTIG FÜR UNPRIVILIGIERTE CONTAINER
+lxc.apparmor.profile = generated
+lxc.apparmor.allow_nesting = 1
+lxc.mount.auto = sys:mixed
+lxc.mount.entry = /dev/fuse dev/fuse none bind,optional,create=file
+lxc.rootfs.path = dir:/var/lib/lxc/unpriv-container-1/rootfs
+lxc.uts.name = unpriv-container-1
+lxc.tty.max = 2
+
+# Network configuration
+lxc.net.0.type = veth
+lxc.net.0.hwaddr = 5a:18:a5:1e:dc:36
+lxc.net.0.link = br0
+lxc.net.0.flags = up
+lxc.net.0.name = eth0
