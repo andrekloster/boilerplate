@@ -1,6 +1,6 @@
 ---
 # handlers file for Bind setup
-- name: restart bind
-  service:
+- name: Restart bind
+  ansible.builtin.service:
     name: bind9
     state: restarted

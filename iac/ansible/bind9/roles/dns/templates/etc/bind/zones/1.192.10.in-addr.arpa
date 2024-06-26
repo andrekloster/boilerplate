@@ -11,6 +11,8 @@ $TTL 60
 
 @    IN NS  dns.test.local.
 
-{% for hostname, ip_suffix in zones['1.192.10.in-addr.arpa']['records'].items() %}
-{{ ip_suffix[0] }}  IN  PTR  {{ hostname }}.test.local.
+{% for ip_suffix, hostnames in zones['1.192.10.in-addr.arpa']['records'].items() %}
+{% for hostname in hostnames %}
+{{ ip_suffix }}  IN  PTR  {{ hostname }}.test.local.
+{% endfor %}
 {% endfor %}

@@ -1,47 +1,43 @@
 ---
-- include_vars: vars/main.yaml
 - name: Install bind9
-  apt:
+  ansible.builtin.apt:
     pkg:
       - bind9
     update_cache: true
-- name: copy named.conf.local
-  template:
-    src: templates/etc/bind/named.conf.local
+- name: Copy named.conf.local
+  ansible.builtin.template:
+    src: templates/etc/bind/named.conf.local.j2
     dest: /etc/bind/named.conf.local
     owner: root
     group: bind
     mode: '0644'
-- name: copy named.conf.options
-  template:
-    src: templates/etc/bind/named.conf.options
+- name: Copy named.conf.options
+  ansible.builtin.template:
+    src: templates/etc/bind/named.conf.options.j2
     dest: /etc/bind/named.conf.options
     owner: root
     group: bind
     mode: '0644'
-- name: create zones directory
+- name: Create zones directory
   ansible.builtin.file:
     state: directory
     path: /etc/bind/zones
     owner: root
     group: bind
     mode: '0750'
-- name: create bind logs directory
+- name: Create bind logs directory
   ansible.builtin.file:
     state: directory
     path: /var/log/named
     owner: bind
     group: bind
     mode: '0750'
-- name: modify forward zone
-  template:
-    src: templates/etc/bind/zones/{{ item }}
+- name: Modify forward zone
+  ansible.builtin.template:
+    src: templates/etc/bind/zones/{{ item }}.j2
     dest: /etc/bind/zones/{{ item }}
     owner: root
     group: bind
-    mode: 0640
-  loop:
-    - 'test.local'
-    - '1.192.10.in-addr.arpa'
-    - 'd.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa'
+    mode: '0640'
+  loop: "{{ zones.keys() }}"
   notify: restart bind

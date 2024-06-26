@@ -1,0 +1,66 @@
+options {
+
+  directory "/var/cache/bind";
+  
+  forwarders {
+{% for forwarder in bind.forwards %}
+    {{ forwarder }};
+{% endfor %}
+  };
+  
+  listen-on port 53 {
+{% for address in bind.listen_address %}
+    {{ address }};
+{% endfor %}
+  };
+
+  allow-query {
+{% for query in bind.allow_query %}
+    {{ query }};
+{% endfor %}
+  };
+  
+{% if bind.allow_transfer is defined %}
+  allow-transfer {
+{% for transfer in bind.allow_transfer %}
+    {{ transfer }};
+{% endfor %}
+  };
+{% endif %}
+  
+{% if bind.allow_notify is defined %}
+  allow-notify {
+{% for notify in bind.allow_notify %}
+    {{ notify }};
+{% endfor %}
+  };
+{% endif %}
+
+{% if bind.also_notify is defined %}
+  also-notify {
+{% for also_notify in bind.also_notify %}
+    {{ also_notify }};
+{% endfor %}
+  };
+{% endif %}
+  
+  allow-update-forwarding { none; };
+  auth-nxdomain no;
+  dnssec-validation auto;
+};
+
+logging {
+
+  channel simple_log {
+    file "/var/log/named/bind.log" versions 3 size 3m;
+    severity notice;
+    print-time yes;
+    print-severity yes;
+    print-category yes;
+  };
+
+  category default {
+    simple_log;
+    default_syslog;
+  };
+};

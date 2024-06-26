@@ -1,5 +1,6 @@
 ---
-- hosts: dns
+- name: Run DNS role
+  hosts: dns
   become: true
   roles:
     - dns
